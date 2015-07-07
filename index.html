@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="kayako">
+  <head>
+    <title>Get the tweets</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="css/style.css" rel="stylesheet"><!--Site Specific Stylesheets-->
+    <noscript>JavaScript has to be enabled on your browser to get this working.</noscript>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.1/angular-sanitize.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+  </head><!--Navigation Header-->
+
+  <body ng-controller="mainCtrl">
+    <div class="logo">
+      <img src="assets/tw.png" width="100">
+    </div>
+    <div class="tweetsHolder">
+      <input type="text" id="hashTag" ng-model="hashTag">
+      <div class="tweet" ng-repeat="tweet in tweets" >
+        <div class="tweetImg">
+          <img src="{{tweet.user.profile_image_url}}">
+        </div>
+        <div class="tweetText">
+          <h3><a href="https://twitter.com/{{tweet.user.screen_name}}">@{{tweet.user.screen_name}}</a></h3>
+          <p dynamic ng-bind-html="deliberatelyTrustDangerousSnippet(tweet.text)">{{tweet.text}}</p>
+        </div>
+      </div>    
+    </div>
+    <div id="waiting" ng-show="loading==true">
+      <img src="assets/waiting.gif" width="60">
+    </div>
+    <a id="loadMore" ng-click="giveMeMore()" ng-hide="loading==true">Load More</a>
+  </body>
+</html>
